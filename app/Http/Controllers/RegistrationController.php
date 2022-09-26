@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegistrationRequest;
 
 class RegistrationController extends Controller
 {
@@ -13,27 +14,33 @@ class RegistrationController extends Controller
         return view('auth.register');
     }
 
-    public function store(Request $request)
+    public function store(RegistrationRequest $request)
     {
-        request()->validate([
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'email' => ['email', 'unique:users', 'email'],
-            'password' => ['required', 'min:4']
-        ]);
+        User::create($request->all());
+
+        // $attributes = $request->all();
+        // $attributes['password'] = Hash::make($request->password);
+
+
+
+        // old ways
 
         // $user = User::Where('email', $request->email)->first();
         // if ($user) {
         //     dd('user sudah ada!');
         // }
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
+        // User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password)
+        // ]);
+
+
 
         // session()->put('key', 'value');
-        session()->flash('success', 'You are now registered.');
-        return redirect('/');
+        // session()->flash('success', 'You are now registered.');
+
+        return redirect('/')->with('success', 'You are now registered.');
     }
 }
