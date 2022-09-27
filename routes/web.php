@@ -3,6 +3,7 @@
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,4 +24,6 @@ Route::post('register', [RegistrationController::class, 'store'])->name('registe
 // login route
 Route::get('/', [LoginController::class, 'create'])->name('login');
 Route::post('/', [LoginController::class, 'store'])->name('login');
-Route::get('/dashboard', [PegawaiController::class, 'index']);
+Route::post('logout', [LogoutController::class, 'logout'])->middleware('auth')->name('logout');
+
+Route::get('/dashboard', [PegawaiController::class, 'index'])->middleware('auth');
