@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,6 @@ Route::get('register', [RegistrationController::class, 'create'])->name('registe
 Route::post('register', [RegistrationController::class, 'store'])->name('register');
 
 // login route
-Route::get('/', [LoginController::class, 'index']);
+Route::get('/', [LoginController::class, 'create'])->name('login');
+Route::post('/', [LoginController::class, 'store'])->name('login');
+Route::get('/dashboard', [PegawaiController::class, 'index']);
